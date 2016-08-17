@@ -21,9 +21,7 @@ function likeme_shortcode() {
 
 /**
  * Ajax call for the button */
- add_action( 'wp_ajax_likeme', 'likeme_callback' );
-function likeme_callback() {
-	
+ function likeme_callback() {  
   global $wpdb; // this is how you get access to the database
 
 	$ip = $_POST['ip'];
@@ -38,12 +36,13 @@ function likeme_callback() {
     ));
   }
 
-
-  $totalLikes = $wpdb->get_var('SELECT COUNT(*) FROM ' . $table_name);
+  $totalLikes = $wpdb->get_var("SELECT COUNT(*) FROM $table_name");  
   echo $totalLikes;
 
 	wp_die(); // this is required to terminate immediately and return a proper response
 }
+add_action( 'wp_ajax_likeme', 'likeme_callback' );
+add_action( 'wp_ajax_nopriv_likeme', 'likeme_callback' );
 
 
 
